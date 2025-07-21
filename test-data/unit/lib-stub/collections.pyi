@@ -1,4 +1,17 @@
-from typing import Any, Iterable, Union, Dict, TypeVar, Optional, Callable, Generic, Sequence, MutableMapping
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generic,
+    Iterable,
+    MutableMapping,
+    Optional,
+    Self,
+    Sequence,
+    TypeVar,
+    Union,
+    overload,
+)
 
 def namedtuple(
     typename: str,
@@ -23,3 +36,9 @@ class Counter(Dict[KT, int], Generic[KT]): ...
 class deque(Sequence[KT], Generic[KT]): ...
 
 class ChainMap(MutableMapping[KT, VT], Generic[KT, VT]): ...
+
+class _tuplegetter(Generic[KT]):
+    @overload
+    def __get__(self, instance: None, owner: type[Any] | None = None) -> Self: ...
+    @overload
+    def __get__(self, instance: object, owner: type[Any] | None = None) -> KT: ...
